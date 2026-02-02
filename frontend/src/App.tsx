@@ -182,6 +182,7 @@ function App() {
                 routerProvider={routerProvider}
                 authProvider={authProvider}
                 resources={[
+
                   {
                     name: "home",
                     list: "/home",
@@ -189,10 +190,10 @@ function App() {
                       label: "Dashboard",
                       icon: <InsertPageBreakIcon />,
 
-                    }
-                    // create: "/blog-posts/create",
-                    // edit: "/blog-posts/edit/:id",
-                    // show: "/blog-posts/show/:id",
+                    },
+                    create: "/blog-posts/create",
+                    edit: "/blog-posts/edit/:id",
+                    show: "/blog-posts/show/:id",
                   },
                   {
                     name: "properties",
@@ -276,7 +277,7 @@ function App() {
                   >
                     {/* <Route
                       index
-                      element={<NavigateToResource resource="dashboard" />}
+                      element={<NavigateToResource resource="home" />}
                     /> */}
 
                     <Route path="/home">

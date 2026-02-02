@@ -33,9 +33,16 @@ export const Sider = (props: React.ComponentProps<typeof ThemedSider>) => {
     return (
         <Box sx={siderStyle}>
             <ThemedSider
-                showDashboard={false}
-                Title={() => null}
-                {...props} />
+                {...props}
+                render={({ items }) => {
+                    // 🔥 ลบ dashboard default ทิ้งตรงนี้
+                    const filteredItems = items.filter(
+                        (item) => item.name !== "dashboard"
+                    );
+
+                    return <>{filteredItems}</>;
+                }}
+            />
         </Box>
     );
 };
