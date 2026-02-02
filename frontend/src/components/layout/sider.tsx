@@ -2,31 +2,24 @@ import { ThemedSider } from "@refinedev/mui";
 import { Box } from "@mui/material";
 import { SxProps, Theme } from "@mui/material/styles";
 
-export const Sider = () => {
+export const Sider = (props: React.ComponentProps<typeof ThemedSider>) => {
     const siderStyle: SxProps<Theme> = {
         "& .MuiListItemButton-root": {
             padding: "10px",
             margin: "10px",
             borderRadius: "12px",
-            color: "#1e36e8", // ตัวหนังสือ
+            color: "#1e36e8",
         },
-
         "& .MuiListItemIcon-root": {
-            color: "#475be8", // icon
+            color: "#475be8",
         },
-
-        // hover (ยังไม่ selected)
         "& .MuiListItemButton-root:hover": {
             backgroundColor: "transparent",
         },
-
-        // selected
         "& .MuiListItemButton-root.Mui-selected": {
             backgroundColor: "#475be8",
-            color: "#fefefe",
+            color: "#fff",
         },
-
-        // icon + text ตอน selected
         "& .MuiListItemButton-root.Mui-selected .MuiListItemIcon-root": {
             color: "white",
         },
@@ -36,9 +29,13 @@ export const Sider = () => {
             fontWeight: 600,
         },
     };
+
     return (
         <Box sx={siderStyle}>
-            <ThemedSider />
+            <ThemedSider
+                showDashboard={false}
+                Title={() => null}
+                {...props} />
         </Box>
     );
 };

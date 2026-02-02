@@ -14,7 +14,7 @@ import {
   useNotificationProvider,
 } from "@refinedev/mui";
 
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import InsertPageBreakIcon from '@mui/icons-material/InsertPageBreak';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import ReviewsIcon from '@mui/icons-material/Reviews';
@@ -23,17 +23,20 @@ import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 
 import Title from "./components/title"
 // import { theme } from "./theme/theme"
-// import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Sider } from "./components/layout/sider"
+
 
 import {
   Agent,
   AgentProfile,
   AllProperties,
   CreateProperties,
-  EditProperties,
+  // EditProperties,
   Home,
-  PropertyDetail
+  PropertyDetail,
+  Review,
+  Message,
 } from "./pages"
 
 import CssBaseline from "@mui/material/CssBaseline";
@@ -53,6 +56,9 @@ import { CredentialResponse } from "./interfaces/google";
 import { Login } from "./pages/login";
 import { dataProvider } from "./providers/data";
 import { parseJwt } from "./utils/parse-jwt";
+import { Profile } from "./components";
+import { title } from "process";
+import { dividerClasses } from "@mui/material";
 
 
 const axiosInstance = axios.create();
@@ -65,8 +71,23 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+const theme = createTheme({
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: "14px",
+          fontWeight: 700,
+        },
+      },
+    },
+  },
+});
+
 function App() {
   const authProvider: AuthProvider = {
+
+
     login: async ({ credential }: CredentialResponse) => {
       const profileObj = credential ? parseJwt(credential) : null;
 
@@ -127,7 +148,7 @@ function App() {
           message: "Check failed",
           name: "Token not found",
         },
-        logout: true,
+        // logout: true,
         redirectTo: "/login",
       };
     },
@@ -140,6 +161,7 @@ function App() {
 
       return null;
     },
+
   };
 
   return (
@@ -147,11 +169,13 @@ function App() {
       {/* <GitHubBanner /> */}
       < RefineKbarProvider >
         <ColorModeContextProvider>
-          {/* <ThemeProvider > */}
-          <CssBaseline />
-          <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
-          <RefineSnackbarProvider>
-            <DevtoolsProvider>
+          <ThemeProvider theme={theme} >
+            <CssBaseline />
+            <GlobalStyles styles={{
+              html: { WebkitFontSmoothing: "auto" },
+            }} />
+            <RefineSnackbarProvider>
+              {/* <DevtoolsProvider> */}
               <Refine
                 dataProvider={dataProvider}
                 notificationProvider={useNotificationProvider}
@@ -159,10 +183,12 @@ function App() {
                 authProvider={authProvider}
                 resources={[
                   {
-                    name: "dashboard",
+                    name: "home",
                     list: "/home",
                     meta: {
-                      icon: <DashboardIcon />
+                      label: "Dashboard",
+                      icon: <InsertPageBreakIcon />,
+
                     }
                     // create: "/blog-posts/create",
                     // edit: "/blog-posts/edit/:id",
@@ -170,7 +196,7 @@ function App() {
                   },
                   {
                     name: "properties",
-                    list: "/home",
+                    list: "/properties",
                     meta: {
                       icon: <MapsHomeWorkIcon />
                     }
@@ -180,7 +206,7 @@ function App() {
                   },
                   {
                     name: "agent",
-                    list: "/home",
+                    list: "/agent",
                     meta: {
                       icon: <SupportAgentIcon />
                     }
@@ -190,7 +216,7 @@ function App() {
                   },
                   {
                     name: "reviews",
-                    list: "/home",
+                    list: "/reviews",
                     meta: {
                       icon: <ReviewsIcon />
                     }
@@ -200,7 +226,7 @@ function App() {
                   },
                   {
                     name: "messages",
-                    list: "/home",
+                    list: "/messages",
                     meta: {
                       icon: <ChatIcon />
                     }
@@ -209,8 +235,8 @@ function App() {
                     // show: "/blog-posts/show/:id",
                   },
                   {
-                    name: "myProfile",
-                    list: "/home",
+                    name: "profile",
+                    list: "/profile",
                     meta: {
                       icon: <SwitchAccountIcon />
                     }
@@ -221,10 +247,11 @@ function App() {
 
                 ]}
                 options={{
-                  syncWithLocation: true,
+                  syncWithLocation: false,
                   warnWhenUnsavedChanges: true,
                   projectId: "240zfW-9QxyID-4RYZUP",
-                }}
+                }
+                }
               >
                 <Routes>
                   <Route
@@ -233,25 +260,43 @@ function App() {
                         key="authenticated-inner"
                         fallback={<CatchAllNavigate to="/login" />}
                       >
+
                         <ThemedLayout
+                          // คลิปสอนตัว ThemeLayoutV2 
+                          // แต่ของ V ผมไม่มีให้ refine swizzle V2 ครับ
                           Header={Header}
                           Title={Title}
                           Sider={Sider}
+
                         >
                           <Outlet />
                         </ThemedLayout>
                       </Authenticated>
                     }
                   >
-                    <Route
+                    {/* <Route
                       index
-                      element={<NavigateToResource resource="Dashboard" />}
-                    />
+                      element={<NavigateToResource resource="dashboard" />}
+                    /> */}
+
                     <Route path="/home">
                       <Route index element={<Home />} />
                     </Route>
-
-
+                    <Route path="/properties">
+                      <Route index element={<AllProperties />} />
+                    </Route>
+                    <Route path="/agent">
+                      <Route index element={<Agent />} />
+                    </Route>
+                    <Route path="/reviews">
+                      <Route index element={<Review />} />
+                    </Route>
+                    <Route path="/messages">
+                      <Route index element={<Message />} />
+                    </Route>
+                    <Route path="/profile">
+                      <Route index element={<AgentProfile />} />
+                    </Route>
 
                     <Route path="*" element={<ErrorComponent />} />
                   </Route>
@@ -264,7 +309,7 @@ function App() {
                       </Authenticated>
                     }
                   >
-                    {/* <Route path="/login" element={<Login />} /> */}
+                    <Route path="/login" element={<Login />} />
                   </Route>
                 </Routes>
 
@@ -273,9 +318,9 @@ function App() {
                 <DocumentTitleHandler />
               </Refine>
               <DevtoolsPanel />
-            </DevtoolsProvider>
-          </RefineSnackbarProvider >
-          {/* </ThemeProvider > */}
+              {/* </DevtoolsProvider> */}
+            </RefineSnackbarProvider >
+          </ThemeProvider >
         </ColorModeContextProvider >
       </RefineKbarProvider >
     </BrowserRouter >

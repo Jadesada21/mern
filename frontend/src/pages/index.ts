@@ -6,6 +6,8 @@ import EditPropertieE from "./editProperties";
 import Home from "./home";
 import PropertyDetail from "./propertyDetail";
 import { Login } from "./login";
+import Review from "./review";
+import Message from "./message";
 
 export {
     Agent,
@@ -16,4 +18,6 @@ export {
     Home,
     Login,
     PropertyDetail,
+    Review,
+    Message
 }

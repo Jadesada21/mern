@@ -1,7 +1,7 @@
 function AgentProfile() {
     return (
         <div>
-
+            Hello AgentProfile
         </div>
     )
 }
