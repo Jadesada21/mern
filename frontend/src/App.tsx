@@ -251,6 +251,7 @@ function App() {
                   syncWithLocation: false,
                   warnWhenUnsavedChanges: true,
                   projectId: "240zfW-9QxyID-4RYZUP",
+
                 }
                 }
               >
@@ -275,10 +276,10 @@ function App() {
                       </Authenticated>
                     }
                   >
-                    {/* <Route
+                    <Route
                       index
                       element={<NavigateToResource resource="home" />}
-                    /> */}
+                    />
 
                     <Route path="/home">
                       <Route index element={<Home />} />
@@ -299,7 +300,7 @@ function App() {
                       <Route index element={<AgentProfile />} />
                     </Route>
 
-                    <Route path="*" element={<ErrorComponent />} />
+                    {/* <Route path="*" element={<ErrorComponent />} /> */}
                   </Route>
                   <Route
                     element={

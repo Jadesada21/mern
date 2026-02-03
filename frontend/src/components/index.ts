@@ -4,7 +4,7 @@ import PropertyCard from './common/PropertyCard'
 
 import PieChart from './chart/PieChart'
 import PropertyReferral from './chart/PropertyReferral'
-import TotalRevernue from './chart/TotalRevernue'
+import TotalRevenue from './chart/TotalRevenue'
 
 import AgentCard from './agent/AgentCard'
 
@@ -16,7 +16,8 @@ export {
     PropertyCard,
     PieChart,
     PropertyReferral,
-    TotalRevernue,
+    TotalRevenue,
     AgentCard,
     TopAgent,
+
 }

@@ -34,15 +34,16 @@ export const Sider = (props: React.ComponentProps<typeof ThemedSider>) => {
         <Box sx={siderStyle}>
             <ThemedSider
                 {...props}
-                render={({ items }) => {
-                    // 🔥 ลบ dashboard default ทิ้งตรงนี้
-                    const filteredItems = items.filter(
-                        (item) => item.name !== "dashboard"
-                    );
+            // render={({ items }) => {
+            //     // 🔥 ลบ dashboard default ทิ้งตรงนี้
+            //     const filteredItems = items.filter(
+            //         (item) => item.name !== "dashboard"
+            //     );
 
-                    return <>{filteredItems}</>;
-                }}
+            //     return <>{filteredItems}</>;
+            // }}
             />
         </Box>
     );
 };
+

@@ -1,6 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material"
 import { PieChartProps } from "../../interfaces/home"
 import ReactApexChart from "react-apexcharts";
+import type { ComponentType } from "react";
+
+const ApexChart = ReactApexChart as unknown as ComponentType<any>;
 
 const PieChart = ({ title, value, series, colors }: PieChartProps) => {
     return (
@@ -23,7 +26,7 @@ const PieChart = ({ title, value, series, colors }: PieChartProps) => {
                 direction={'column'}
             >
                 <Typography
-                    fontSize={14}
+                    fontSize={20}
                     color={"#808191"}>
                     {title}
                 </Typography>
@@ -35,8 +38,7 @@ const PieChart = ({ title, value, series, colors }: PieChartProps) => {
                     {value}
                 </Typography>
             </Stack>
-            <ReactApexChart
-
+            <ApexChart
                 options={{
                     chart: { type: "donut" },
                     colors,
@@ -54,3 +56,4 @@ const PieChart = ({ title, value, series, colors }: PieChartProps) => {
 }
 
 export default PieChart
+
