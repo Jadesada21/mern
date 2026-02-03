@@ -200,8 +200,8 @@ function App() {
                     list: "/properties",
                     meta: {
                       icon: <MapsHomeWorkIcon />
-                    }
-                    // create: "/blog-posts/create",
+                    },
+                    create: "/properties/create",
                     // edit: "/blog-posts/edit/:id",
                     // show: "/blog-posts/show/:id",
                   },
@@ -286,6 +286,7 @@ function App() {
                     </Route>
                     <Route path="/properties">
                       <Route index element={<AllProperties />} />
+                      <Route path="create" element={<CreateProperties />} />
                     </Route>
                     <Route path="/agent">
                       <Route index element={<Agent />} />

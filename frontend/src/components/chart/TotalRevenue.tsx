@@ -1,11 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
-import ReactApexChart from "react-apexcharts";
+import Chart from "react-apexcharts";
 import type { ComponentType } from "react";
 import { TotalRevenueOptions, TotalRevenueSeries } from "./chart.config";
 
-const ApexChart = ReactApexChart as unknown as ComponentType<any>;
+const ApexChart = Chart as unknown as ComponentType<any>;
 
 function TotalRevenue() {
     return (

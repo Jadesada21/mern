@@ -1,9 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material"
 import { PieChartProps } from "../../interfaces/home"
-import ReactApexChart from "react-apexcharts";
+import Chart from "react-apexcharts";
 import type { ComponentType } from "react";
 
-const ApexChart = ReactApexChart as unknown as ComponentType<any>;
+const ApexChart = Chart as unknown as ComponentType<any>;
 
 const PieChart = ({ title, value, series, colors }: PieChartProps) => {
     return (
