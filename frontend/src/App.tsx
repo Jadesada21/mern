@@ -92,13 +92,28 @@ function App() {
       const profileObj = credential ? parseJwt(credential) : null;
 
       if (profileObj) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            ...profileObj,
-            avatar: profileObj.picture,
+        const res = await fetch("http://localhost:8080/api/v1/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: profileObj.name,
+            email: profileObj.email,
+            avatar: profileObj.picture
           })
-        );
+        })
+
+        const data = await res.json()
+
+        if (res.status === 200) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              ...profileObj,
+              avatar: profileObj.picture,
+              userid: data._id
+            })
+          );
+        }
 
         localStorage.setItem("token", `${credential}`);
 
@@ -189,11 +204,10 @@ function App() {
                     meta: {
                       label: "Dashboard",
                       icon: <InsertPageBreakIcon />,
-
                     },
-                    create: "/blog-posts/create",
-                    edit: "/blog-posts/edit/:id",
-                    show: "/blog-posts/show/:id",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
                   },
                   {
                     name: "properties",

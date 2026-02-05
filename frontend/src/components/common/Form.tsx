@@ -1,4 +1,4 @@
-import { Box, FormControl, FormHelperText, FormLabel, MenuItem, Select, Stack, TextareaAutosize, TextField, Typography } from "@mui/material"
+import { Box, Button, FormControl, FormHelperText, FormLabel, MenuItem, Select, Stack, TextareaAutosize, TextField, Typography } from "@mui/material"
 import { CreateResponse, UpdateResponse } from "@refinedev/core"
 import {
     FieldValues,
@@ -6,18 +6,9 @@ import {
     UseFormHandleSubmit,
 } from "react-hook-form";
 import { ReactNode } from "react";
+import CustomButton from "./CustomButton";
+import { FormProps } from "../../interfaces/home";
 
-
-interface FormProps<T extends FieldValues = FieldValues> {
-    type: "create" | "edit";
-    register: UseFormRegister<T>;
-    handleSubmit: UseFormHandleSubmit<T>;
-    onFinish: (values: T) => Promise<void> | void;
-    formLoading: boolean;
-    handleImageChange: (file: File) => void;
-    propertyImages?: { name: string; url: string };
-    children?: ReactNode;
-}
 
 const Form = <T extends FieldValues>({
     type,
@@ -25,7 +16,10 @@ const Form = <T extends FieldValues>({
     handleSubmit,
     onFinish,
     formLoading,
-    handleImageChange
+    handleImageChange,
+    propertyImages,
+    children,
+
 }: FormProps<T>) => {
     return (
         <Box>
@@ -44,7 +38,7 @@ const Form = <T extends FieldValues>({
                     flexDirection: "column",
                     gap: "20px",
                 }}
-                // { onSubmit = { handleSubmit(onFinishHandler) }}
+                // { onSubmit = {handleSubmit(onFinish)}}
                 >
                     <FormControl>
                         <FormHelperText
@@ -89,11 +83,12 @@ const Form = <T extends FieldValues>({
                                 padding: "10px",
                                 color: "#919191"
                             }}
+                            {...register<any>("description", { required: true })}
                         >
                         </TextareaAutosize>
                     </FormControl>
                     <Stack
-                        direction="row"
+                        direction="column"
                         gap={4}
                     >
                         <FormControl sx={{
@@ -117,6 +112,8 @@ const Form = <T extends FieldValues>({
                                 inputProps={{ "aria-label": "Without label" }}
                                 defaultValue="apartment"
                                 sx={{ textTransform: "capitalize" }}
+
+                                {...register<any>("propertyType", { required: true })}
                             >
                                 <MenuItem
                                     value="apartment">Apartment</MenuItem>
@@ -146,7 +143,7 @@ const Form = <T extends FieldValues>({
                                 color="info"
                                 variant="outlined"
                                 placeholder="Enter Price"
-                            // {...register<any>("title", { required: true })}
+                                {...register<any>("price", { required: true })}
                             />
                         </FormControl>
                     </Stack>
@@ -166,7 +163,7 @@ const Form = <T extends FieldValues>({
                             color="info"
                             variant="outlined"
                             placeholder="Enter Price"
-                        // {...register<any>("title", { required: true })}
+                            {...register<any>("location", { required: true })}
                         />
                     </FormControl>
                     <Stack
@@ -179,10 +176,51 @@ const Form = <T extends FieldValues>({
                             direction={'row'}
                             gap={2}
                         >
-                            <Typography></Typography>
-
+                            <Typography
+                                color="#11142d"
+                                fontSize={16}
+                                fontWeight={500}
+                                my={"10px"}
+                            >
+                                Property Photo
+                            </Typography>
+                            <Button
+                                component="label"
+                                sx={{
+                                    width: "fit-content",
+                                    color: "#2ed480",
+                                    textTransform: "capitalize",
+                                    fontSize: "16"
+                                }}
+                            >
+                                Upload *
+                                <input
+                                    hidden type="file"
+                                    accept="images/*"
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        handleImageChange(e.target.files![0])
+                                    }}
+                                />
+                            </Button>
                         </Stack>
+                        <Typography
+                            fontSize={14}
+                            color={"#808191"}
+                            sx={{
+                                wordBreak: "break-all"
+                            }}
+                        >
+                            {propertyImages?.name || "No image selected"}
+                        </Typography>
                     </Stack>
+                    <CustomButton
+                        type="submit"
+                        title={formLoading ? "Submitting.." : "Submit"}
+                        backgroundColor={"#475be8"}
+                        color={"#fcfcfc"}
+                        icon={undefined}
+                        disabled={false}
+                    />
                 </form>
             </Box>
         </Box>
