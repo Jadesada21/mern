@@ -11,6 +11,7 @@ function AllProperties() {
             backgroundColor="#000"
             color="#fcfcfc"
             icon={<Add />}
+            disabled={false}
         />
     )
 }

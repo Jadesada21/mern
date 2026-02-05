@@ -1,34 +1,32 @@
 import { Box, FormControl, FormHelperText, FormLabel, MenuItem, Select, Stack, TextareaAutosize, TextField, Typography } from "@mui/material"
 import { CreateResponse, UpdateResponse } from "@refinedev/core"
-import { promises } from "dns"
-import { FormEventHandler } from "react"
-import { FieldValues } from "react-hook-form"
+import {
+    FieldValues,
+    UseFormRegister,
+    UseFormHandleSubmit,
+} from "react-hook-form";
+import { ReactNode } from "react";
 
-interface FormProps {
-    type: string
-    register: any
-    onFinish: (
-        values: FieldValues
-    ) => Promise<void | CreateResponse | UpdateResponse>
-    formLoading: boolean
-    handleSubmit: FormEventHandler<HTMLFormElement | undefined>
-    handleImageChange: (file) => void
-    onFinishHandler: (
-        values: FieldValues
-    ) => Promise<void> | void
-    propertyImages: { name: string; url: string }
+
+interface FormProps<T extends FieldValues = FieldValues> {
+    type: "create" | "edit";
+    register: UseFormRegister<T>;
+    handleSubmit: UseFormHandleSubmit<T>;
+    onFinish: (values: T) => Promise<void> | void;
+    formLoading: boolean;
+    handleImageChange: (file: File) => void;
+    propertyImages?: { name: string; url: string };
+    children?: ReactNode;
 }
 
-const Form = ({
+const Form = <T extends FieldValues>({
     type,
     register,
-    onFinish,
-    values,
-    formLoading,
     handleSubmit,
-    handleImageChange,
-    onFinishHandler,
-}: FormProps) => {
+    onFinish,
+    formLoading,
+    handleImageChange
+}: FormProps<T>) => {
     return (
         <Box>
             <Typography
@@ -41,12 +39,12 @@ const Form = ({
             >
                 <form style={{
                     marginTop: "20px",
-                    width: "100px",
+                    width: "100%",
                     display: "flex",
                     flexDirection: "column",
                     gap: "20px",
                 }}
-                //      {/* onSubmit={handleSubmit(onFinishHandler)} */}
+                // { onSubmit = { handleSubmit(onFinishHandler) }}
                 >
                     <FormControl>
                         <FormHelperText
@@ -65,7 +63,7 @@ const Form = ({
                             color="info"
                             variant="outlined"
 
-                            {...register('title', { require: true })}
+                            {...register<any>("title", { required: true })}
                         />
                     </FormControl>
                     <FormControl>
@@ -80,16 +78,15 @@ const Form = ({
                             Enter properties description
                         </FormHelperText>
                         <TextareaAutosize
-                            minRows={5}
+                            minRows={3}
                             required
-                            placeholder="please insert description"
                             color="info"
                             style={{
                                 width: "100%",
                                 backgroundColor: "transparent",
                                 borderColor: "rgba(0,0,0,0.23)",
                                 borderRadius: 6,
-                                padding: 10,
+                                padding: "10px",
                                 color: "#919191"
                             }}
                         >
@@ -118,11 +115,73 @@ const Form = ({
                                 displayEmpty
                                 required
                                 inputProps={{ "aria-label": "Without label" }}
+                                defaultValue="apartment"
+                                sx={{ textTransform: "capitalize" }}
                             >
-                                <MenuItem value="apartment">
-                                </MenuItem>
+                                <MenuItem
+                                    value="apartment">Apartment</MenuItem>
+                                <MenuItem
+                                    value="villa">Villa</MenuItem>
+                                <MenuItem
+                                    value="farmhouse">Farmhouse</MenuItem>
+                                <MenuItem
+                                    value="condo">Condo</MenuItem>
+                                <MenuItem
+                                    value="studio">Studio</MenuItem>
                             </Select>
                         </FormControl>
+                        <FormControl>
+                            <FormHelperText sx={{
+                                fontWeight: 500,
+                                margin: "10px 0",
+                                fontSize: 16,
+                                color: "#11142d",
+                            }}
+                            >
+                                Enter Property price
+                            </FormHelperText>
+                            <TextField
+                                fullWidth
+                                required
+                                color="info"
+                                variant="outlined"
+                                placeholder="Enter Price"
+                            // {...register<any>("title", { required: true })}
+                            />
+                        </FormControl>
+                    </Stack>
+                    <FormControl  >
+                        <FormHelperText sx={{
+                            fontWeight: 500,
+                            margin: "10px 0",
+                            fontSize: 16,
+                            color: "#11142d",
+                        }}
+                        >
+                            Location
+                        </FormHelperText>
+                        <TextField
+                            fullWidth
+                            required
+                            color="info"
+                            variant="outlined"
+                            placeholder="Enter Price"
+                        // {...register<any>("title", { required: true })}
+                        />
+                    </FormControl>
+                    <Stack
+                        direction={'column'}
+                        gap={1}
+                        justifyContent={"center"}
+                        mb={2}
+                    >
+                        <Stack
+                            direction={'row'}
+                            gap={2}
+                        >
+                            <Typography></Typography>
+
+                        </Stack>
                     </Stack>
                 </form>
             </Box>

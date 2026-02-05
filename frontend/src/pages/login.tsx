@@ -10,7 +10,7 @@ import { CredentialResponse } from "../interfaces/google";
 
 // Todo: Update your Google Client ID here
 const GOOGLE_CLIENT_ID =
-  "524588798817-8lhv90cgciv308jhj0m21lafvg2tjbhu.apps.googleusercontent.com";
+  "524588798817-2pbnapsjvb397p03ppoenjujog8vcgag.apps.googleusercontent.com"
 
 export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();

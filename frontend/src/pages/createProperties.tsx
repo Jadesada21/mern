@@ -1,37 +1,31 @@
-// import { useGetIdentity } from "@refinedev/core"
-// import { Form } from "react-hook-form"
-
-
-
-
-// function CreateProperties() {
-//     const { data: user } = useGetIdentity({
-//         v3LegacyAuthProviderCompatible: true
-//     })
-
-//     return (
-//         <Form
-//             type="create" />
-//     )
-// }
-
-// export default CreateProperties
-
-
 import { useGetIdentity } from "@refinedev/core";
-import { Form } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import Form from "../components/common/Form";
 
 function CreateProperties() {
     const { data: user, isLoading } = useGetIdentity();
+    const {
+        register,
+        handleSubmit,
+        formState: { isSubmitting },
+    } = useForm();
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    if (isLoading) return <div>Loading...</div>;
+
+    const onFinish = (data: any) => {
+        console.log("FORM DATA:", data);
+    };
 
     return (
-        <Form type="create">
-            {/* ตัวอย่างการใช้งาน user */}
-            {/* <div>Created by: {user?.name}</div> */}
+        <Form
+            type="create"
+            register={register}
+            handleSubmit={handleSubmit}
+            onFinish={onFinish}
+            formLoading={isSubmitting}
+        // handleImageChange={handleImageChange}
+        >
+            {/* fields */}
         </Form>
     );
 }
