@@ -3,6 +3,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useDelete, useGetIdentity, useShow } from "@refinedev/core";
 import { useNavigate, useParams } from "react-router"
 import CustomButton from "../components/common/CustomButton";
+import { queryObjects } from "node:v8";
 
 const checkImage = (url: string) => {
     const image = new Image()
@@ -15,13 +16,15 @@ function PropertyDetail() {
 
     const { data: user } = useGetIdentity<any>();
 
-    const { queryResult } = useShow<any>()
+    const { query } = useShow<any>()
+
+    const { data, isLoading, isError } = query
 
     const { id } = useParams()
 
     const { mutate } = useDelete<any>()
 
-    const { data, isLoading, isError } = queryResult
+
 
     const Properties = data?.data ?? []
 
@@ -61,15 +64,16 @@ function PropertyDetail() {
             <Box
                 display={"flex"}
                 flexDirection={{ xs: "column", lg: "row" }}
+                justifyContent={"space-between"}
                 gap={10}
                 marginTop={"10px"}
             >
                 <Box
                     flex={1}
-                    maxWidth={780}
+                    width={"100%"}
                 >
                     <img src={Properties.photo}
-                        width={780}
+                        width={"100%"}
                         height={546}
                         style={{ objectFit: "cover", borderRadius: "10px" }}
                     />
@@ -191,7 +195,7 @@ function PropertyDetail() {
                 </Box>
                 <Box
                     flex={1}
-                    maxWidth={326}
+                    maxWidth={{ xs: "100%", lg: "380px" }}
                     width={"100%"}
                     display={"flex"}
                     flexDirection={"column"}
@@ -284,8 +288,7 @@ function PropertyDetail() {
                                 icon={!isCurrentUser ? <ChatBubble /> : <Edit />}
                                 handleClick={() => {
                                     navigate(`/properties/edit/${Properties._id}`);
-                                }}
-                            />
+                                }} disabled={false} />
                             <CustomButton
                                 title={!isCurrentUser ? "Call" : "Delete"}
                                 backgroundColor={!isCurrentUser ? "#2ED480" : "#D42E2E"}
@@ -293,14 +296,19 @@ function PropertyDetail() {
                                 fullWidth
                                 icon={!isCurrentUser ? <Phone /> : <Delete />}
                                 handleClick={() => {
-                                    if (isCurrentUser) handleDeleteProperty()
-                                }}
-                            />
+                                    if (isCurrentUser) handleDeleteProperty();
+                                }} disabled={false} />
                         </Stack>
                     </Stack>
                     <Stack>
-
+                        <img src="https://www.istanbul-city-guide.com/map/thailand/bangkok/map_of_bangkok.jpg" />
                     </Stack>
+                    <CustomButton
+                        title="Book Now"
+                        backgroundColor="#475BE8"
+                        color="fcfcfc"
+                        fullWidth icon={undefined}
+                        disabled={false} />
                 </Box>
             </Box>
         </Box >

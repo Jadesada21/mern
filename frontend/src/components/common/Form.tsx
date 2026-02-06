@@ -126,6 +126,7 @@ const Form = <T extends FieldValues>({
                                 <MenuItem
                                     value="studio">Studio</MenuItem>
                             </Select>
+
                         </FormControl>
                         <FormControl>
                             <FormHelperText sx={{
@@ -219,7 +220,6 @@ const Form = <T extends FieldValues>({
                         backgroundColor={"#475be8"}
                         color={"#fcfcfc"}
                         icon={undefined}
-                        disabled={false}
                     />
                 </form>
             </Box>
