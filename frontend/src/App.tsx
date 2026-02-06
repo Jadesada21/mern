@@ -216,8 +216,8 @@ function App() {
                       icon: <MapsHomeWorkIcon />
                     },
                     create: "/properties/create",
+                    show: "/properties/show/:id",
                     // edit: "/blog-posts/edit/:id",
-                    // show: "/blog-posts/show/:id",
                   },
                   {
                     name: "agent",
@@ -301,6 +301,7 @@ function App() {
                     <Route path="/properties">
                       <Route index element={<AllProperties />} />
                       <Route path="create" element={<CreateProperties />} />
+                      <Route path="show/:id" element={<PropertyDetail />} />
                     </Route>
                     <Route path="/agent">
                       <Route index element={<Agent />} />

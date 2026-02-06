@@ -5,7 +5,8 @@ import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 
 function CreateProperties() {
-    const { data: user, isLoading } = useGetIdentity();
+    const { data: user } = useGetIdentity<any>();
+
     const {
         refineCore: { onFinish, formLoading },
         register,
