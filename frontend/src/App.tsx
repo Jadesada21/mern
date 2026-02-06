@@ -217,7 +217,7 @@ function App() {
                     },
                     create: "/properties/create",
                     show: "/properties/show/:id",
-                    // edit: "/blog-posts/edit/:id",
+                    edit: "/properties/edit/:id",
                   },
                   {
                     name: "agent",
@@ -302,6 +302,7 @@ function App() {
                       <Route index element={<AllProperties />} />
                       <Route path="create" element={<CreateProperties />} />
                       <Route path="show/:id" element={<PropertyDetail />} />
+                      <Route path="edit/:id" element={<CreateProperties />} />
                     </Route>
                     <Route path="/agent">
                       <Route index element={<Agent />} />

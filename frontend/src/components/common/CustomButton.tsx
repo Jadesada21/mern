@@ -8,7 +8,7 @@ interface CustomButtonProps {
     color: string
     fullWidth?: boolean
     icon: ReactNode
-    disabled: boolean
+    // disabled: boolean
     handleClick?: () => void
 }
 
@@ -19,12 +19,12 @@ const CustomButton = ({
     color,
     fullWidth,
     icon,
-    disabled,
+    // disabled,
     handleClick,
 }: CustomButtonProps) => {
     return (
         <Button
-            disabled={disabled}
+            // disabled={disabled}
             type={type === "submit" ? "submit" : "button"}
             sx={{
                 flex: fullWidth ? 1 : "unset",
