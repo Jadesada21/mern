@@ -91,8 +91,10 @@ function App() {
     login: async ({ credential }: CredentialResponse) => {
       const profileObj = credential ? parseJwt(credential) : null;
 
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
       if (profileObj) {
-        const res = await fetch("http://localhost:8080/api/v1/users", {
+        const res = await fetch(`${API_URL}/api/v1/users`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
